@@ -8,19 +8,24 @@
 
     <style>
         h1{
-            text-align: center;
+            text-align:center;            
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             color:gold
         }
         body{
             background-image: url(Images/background1.jpg);
+            height:100vh;
             background-size:cover;
             background-repeat: no-repeat;
-            background-position:top center;
+            background-position:top-center;
+            
         }
-        div{
+        .Login-container{
             text-align: center;
-            color: gold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color:gold;
+            position:relative;
+            top: 360px;
         }
     </style>
 
@@ -33,7 +38,7 @@
     </h1>
 
     <div class="Login-container">
-        <form id="login-form" action="login_process.php" method="post">
+        <form id="login-form" action="login_process.php" method="post">LOGIN:<br>
             <label for="email">Email</label>
             <input type="email" id="email" placeholder="your email address" required>
     
