@@ -7,102 +7,133 @@
     <link rel="icon" type="image/png" href="Images/favicon_1.png">
 
     <style>
-        /*Styling for h1*/
+        /* Centered, large heading for the page */
         h1 {
             text-align: center;            
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            color: rgb(193, 172, 57);
-            font-size: 60px;
-            margin-top: 20px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Serif font family for a classic look */
+            color: rgb(193, 172, 57); /* Golden text color */
+            font-size: 60px; /* Large font size */
+            margin-top: 20px; /* Space above the heading */
         }
-        /*Styling for background image*/
+
+        /* Background styling for the entire page */
         body {
-            background-image: url(Images/80s_retro_wallpaper.jpg);
-            height: 100vh;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: top center;
+            background-image: url(Images/80s_retro_wallpaper.jpg); /* Background image */
+            height: 100vh; /* Full viewport height */
+            background-size: cover; /* Ensures the image covers the entire area */
+            background-repeat: no-repeat; /* Prevents tiling */
+            background-position: top center; /* Centers the image horizontally */
+            display: flex; /* Flexbox layout for centering content */
+            flex-direction: column; /* Vertically stack elements */
+            align-items: center; /* Center content horizontally */
         }
-        /*Styling for text of form-container*/
+
+        /* Container for the login and registration forms */
         .form-container {
-            text-align: center;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            color: gold;
-            position: relative;
-            top: 200px;
+            display: flex; /* Flexbox layout for child alignment */
+            flex-direction: column; /* Stack forms vertically */
+            align-items: center; /* Center forms horizontally */
+            justify-content: center; /* Center forms vertically */
+            position: relative; /* Allows custom positioning */
+            top: 10px; /* Pushes the form container lower on the page */
+            width: 100%; /* Occupies the full width of the viewport */
         }
-        /*Styling for form-section*/
+
+        /* Shared styling for each form box (login and registration) */
         .form-section {
-            margin: 20px auto;
-            padding: 20px;
-            border: 2px solid gold;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: inline-block;
-            width: 80%;
-            max-width: 400px;
+            margin: 10px 0; /* Vertical spacing between boxes */
+            padding: 20px; /* Space inside the box for content */
+            border: 2px solid gold; /* Gold border around the box */
+            border-radius: 10px; /* Rounded corners for aesthetics */
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            width: 80%; /* Box width is 80% of the viewport */
+            max-width: 400px; /* Restricts the box to a maximum width */
+            text-align: center; /* Centers all text inside the form */
         }
-        /*Styling for form-section h2*/
+
+        /* Adds extra spacing below the login form */
+        #login-section {
+            margin-bottom: 20px; /* Separates the login and registration boxes */
+        }
+
+        /* Styling for section headings (Login/Register) */
         .form-section h2 {
-            margin-bottom: 10px;
+            margin-bottom: 10px; /* Adds space below the heading */
+            color: gold;
         }
-        /*Styling for form-section inputs*/
+
+        /* Label styling for inputs (e.g., Email, Password) */
+        .form-section label {
+            display: block; /* Makes labels appear on a new line */
+            margin-bottom: 5px; /* Adds space below each label */
+            color: gold;
+        }
+
+        /* Input fields styling (e.g., Email and Password fields) */
         .form-section input {
-            display: block;
-            margin: 10px auto;
-            padding: 10px;
-            width: 90%;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            display: block; /* Ensures inputs occupy a full line */
+            margin: 10px auto; /* Centers the input fields horizontally */
+            padding: 10px; /* Adds padding inside the input fields */
+            width: 90%; /* Input width is 90% of the box */
+            border-radius: 5px; /* Slightly rounded input corners */
+            border: 1px solid #ccc; /* Light gray border */
         }
-        /*Styling for form-section button*/
+
+        /* Button styling for the "Login" and "Register" buttons */
         .form-section button[type="submit"] {
-            background-color: gold;
-            color: black;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            background-color: gold; /* Gold-colored background */
+            color: black; /* Black text color */
+            padding: 10px 20px; /* Adds padding inside the button */
+            border: none; /* Removes default border */
+            border-radius: 10px; /* Rounded button corners */
+            cursor: pointer; /* Changes cursor to pointer on hover */
         }
-        /*Styling for form-section button*/
+
+        /* Hover effect for buttons */
         .form-section button[type="submit"]:hover {
-            background-color: darkgoldenrod;
-            color: white;
+            background-color: darkgoldenrod; /* Changes button background on hover */
+            color: white; /* Changes text color on hover */
         }
-        /*Styling for button-container*/
+
+        /* Fixed button at the bottom-right corner for navigation */
         .button-container {
-            position: fixed;
-            right: 50px;
-            bottom: 20px;
+            position: fixed; /* Stays fixed even when scrolling */
+            right: 50px; /* Distance from the right edge */
+            bottom: 20px; /* Distance from the bottom edge */
         }
-        /*Styling for example button---- THIS WILL NOT STAY----*/
+
+        /* Styling for the example button */
         #Example-Button {
-            padding: 15px 30px;
-            font-size: medium;
-            color: black;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            padding: 15px 30px; /* Adds padding inside the button */
+            font-size: medium; /* Medium-sized text */
+            color: black; /* Black text */
+            border: none; /* Removes default border */
+            border-radius: 10px; /* Rounded button corners */
+            cursor: pointer; /* Changes cursor to pointer on hover */
         }
-        
-        /*Styling for example button---- THIS WILL NOT STAY----*/
+
+        /* Hover effect for the example button */
         #Example-Button:hover {
-            background-color: lightgray;
+            background-color: lightgray; /* Light gray background on hover */
         }
+
+        /* Responsive design for small screens (max width: 600px) */
         @media (max-width: 600px) {
             .form-container {
-                top: 150px;
-                font-size: smaller;
+                top: 100px; /* Reduces the top offset for small screens */
+                font-size: smaller; /* Adjusts font size for better readability */
             }
             #Example-Button {
-                padding: 10px 20px;
+                padding: 10px 20px; /* Smaller button padding for mobile */
             }
         }
     </style>
 </head>
 <body>
+    <!-- Main page heading -->
     <h1>Budget time!</h1>
 
+    <!-- Container for login and registration forms -->
     <div class="form-container">
         <!-- Login Section -->
         <div class="form-section" id="login-section">
@@ -136,8 +167,10 @@
         </div>
     </div>
 
+    <!-- Fixed example button at the bottom-right corner -->
     <div class="button-container">
         <button id="Example-Button" onclick="window.location.href='budget-table.html';">Example Table</button>
     </div>
 </body>
 </html>
+
