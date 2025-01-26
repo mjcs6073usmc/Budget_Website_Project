@@ -69,6 +69,21 @@
         form button:hover {
             background-color: darkcyan;
         }
+        .action-button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+        }
+        .edit-btn {
+            background-color: orange;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +106,7 @@
                 <th>Bill Name</th>
                 <th>Cost</th>
                 <th>Due Date</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="table-body">
@@ -114,22 +130,44 @@
 
             // Get input values
             const billName = document.getElementById("bill-name").value;
-            const billCost = document.getElementById("bill-cost").value;
+            let billCost = document.getElementById("bill-cost").value;
             const billDueDate = document.getElementById("bill-due-date").value;
+
+            // Ensure bill cost is formatted as a dollar amount
+            billCost = `$${parseFloat(billCost).toFixed(2)}`;
 
             // Create a new row and cells
             const tableBody = document.getElementById("table-body");
             const newRow = document.createElement("tr");
 
-            // Append cells with input values
+            // Append cells with input values and actions
             newRow.innerHTML = `
                 <td>${billName}</td>
                 <td>${billCost}</td>
                 <td>${billDueDate}</td>
+                <td>
+                    <button class="action-button edit-btn">Edit</button>
+                    <button class="action-button delete-btn">Delete</button>
+                </td>
             `;
 
             // Append the row to the table
             tableBody.appendChild(newRow);
+
+            // Attach event listeners for the new row buttons
+            newRow.querySelector(".delete-btn").addEventListener("click", function() {
+                newRow.remove(); // Delete the row
+            });
+
+            newRow.querySelector(".edit-btn").addEventListener("click", function() {
+                // Prefill form inputs for editing
+                document.getElementById("bill-name").value = billName;
+                document.getElementById("bill-cost").value = parseFloat(billCost.slice(1));
+                document.getElementById("bill-due-date").value = billDueDate;
+
+                // Remove the row being edited
+                newRow.remove();
+            });
 
             // Clear the form inputs
             document.getElementById("add-row-form").reset();
