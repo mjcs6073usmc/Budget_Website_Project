@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Budgeting Table</title>
+    <link rel="icon" type="image/png" href="Images/favicon_1.png">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url(Images/background1.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #f0f0f0; /* Fallback color */
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: darkgray;
+            color: white;
+        }
+        tbody tr:nth-child(even) {
+            background-color: rgb(200, 250, 250);
+        }
+        tbody tr:nth-child(odd) {
+            background-color: rgb(49, 190, 198);
+        }
+        tbody tr:hover {
+            background-color: lightgray;
+            cursor: pointer;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        form input, form select, form button {
+            padding: 10px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        form button {
+            background-color: rgb(49, 190, 198);
+            color: white;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <!-- Input Form -->
+    <form id="add-row-form">
+        <h2>Add a New Bill</h2>
+        <input type="text" id="bill-name" placeholder="Bill Name" required>
+        <input type="text" id="bill-cost" placeholder="Cost" required>
+        <select id="bill-due-date" required>
+            <option value="" disabled selected>Select Due Date</option>
+            <!-- Generate dropdown options dynamically -->
+        </select>
+        <button type="submit">Add Row</button>
+    </form>
+
+    <!-- Budgeting Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Bill Name</th>
+                <th>Cost</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Populate the dropdown list for due dates
+        const dueDateDropdown = document.getElementById("bill-due-date");
+        for (let i = 1; i <= 31; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.textContent = i;
+            dueDateDropdown.appendChild(option);
+        }
+
+        // JavaScript to dynamically add rows
+        document.getElementById("add-row-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get input values
+            const billName = document.getElementById("bill-name").value;
+            const billCost = document.getElementById("bill-cost").value;
+            const billDueDate = document.getElementById("bill-due-date").value;
+
+            // Create a new row and cells
+            const tableBody = document.getElementById("table-body");
+            const newRow = document.createElement("tr");
+
+            // Append cells with input values
+            newRow.innerHTML = `
+                <td>${billName}</td>
+                <td>${billCost}</td>
+                <td>${billDueDate}</td>
+            `;
+
+            // Append the row to the table
+            tableBody.appendChild(newRow);
+
+            // Clear the form inputs
+            document.getElementById("add-row-form").reset();
+        });
+    </script>
+</body>
+</html>

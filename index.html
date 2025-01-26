@@ -7,68 +7,90 @@
     <link rel="icon" type="image/png" href="Images/favicon_1.png">
 
     <style>
-        h1{
-            text-align:center;            
+        h1 {
+            text-align: center;            
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            color:gold;
+            color: gold;
             font-size: 60px;
-            position: top;
-            
+            margin-top: 20px;
         }
-        body{
+        body {
             background-image: url(Images/background1.jpg);
-            height:100vh;
-            background-size:cover;
+            height: 100vh;
+            background-size: cover;
             background-repeat: no-repeat;
-            background-position:top-center;
-            
+            background-position: top center;
         }
-        .Login-container{
+        .Login-container {
             text-align: center;
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            color:gold;
-            position:relative;
+            color: gold;
+            position: relative;
             top: 300px;
         }
-
-        .button-container{
-            position:fixed;
-            right:50px;
+        .Login-container input {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .Login-container button[type="submit"] {
+            background-color: gold;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .Login-container button[type="submit"]:hover {
+            background-color: darkgoldenrod;
+            color: white;
+        }
+        .button-container {
+            position: fixed;
+            right: 50px;
             bottom: 20px;
         }
-        #Example-Button{
+        #Example-Button {
             padding: 15px 30px;
             font-size: medium;
             color: black;
             border: none;
             border-radius: 10px;
-            cursor:pointer;
+            cursor: pointer;
+        }
+        #Example-Button:hover {
+            background-color: lightgray;
+        }
+        @media (max-width: 600px) {
+            .Login-container {
+                top: 200px;
+                font-size: smaller;
+            }
+            #Example-Button {
+                padding: 10px 20px;
+            }
         }
     </style>
-
-
-
 </head>
 <body>
-    <h1>
-        Budgeting for You!
-    </h1>
+    <h1>Budgeting for You!</h1>
 
     <div class="Login-container">
-        <form id="login-form" action="login_process.php" method="post">LOGIN:<br>
+        <form id="login-form" action="login_process.php" method="post">
+            LOGIN:<br>
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="your email address" required>
+            <input type="email" id="email" name="email" placeholder="your email address" required>
     
             <label for="password">Password</label>
-            <input type="text" id="password" placeholder="max 10 characters" maxlength=10 required>
+            <input type="password" id="password" name="password" placeholder="max 10 characters" maxlength="10" required>
 
             <button type="submit">Login</button>
         </form>
     </div>
 
     <div class="button-container">
-        <button  id="Example-Button" onclick="window.location.href='example.html';">Example Table</button>
+        <button id="Example-Button" onclick="window.location.href='budget-table.html';">Example Table</button>
     </div>
-
 </body>
 </html>
