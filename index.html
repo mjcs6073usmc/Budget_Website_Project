@@ -30,6 +30,20 @@
             position:relative;
             top: 300px;
         }
+
+        .button-container{
+            position:fixed;
+            right:50px;
+            bottom: 20px;
+        }
+        #Example-Button{
+            padding: 15px 30px;
+            font-size: medium;
+            color: black
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
     </style>
 
 
@@ -50,7 +64,11 @@
 
             <button type="submit">Login</button>
         </form>
-        
     </div>
+
+    <div class="button-container">
+        <button  id="Example-Button" onclick="window.location.href='budgeting_tools.html';">Example Table</button>
+    </div>
+
 </body>
 </html>
