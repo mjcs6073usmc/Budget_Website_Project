@@ -11,6 +11,16 @@
     <!-- Main page heading -->
     <h1>Budget time!</h1>
 
+    <!--Google API STUFF (WIP)-->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    
+    <!--Google API STUFF (WIP)-->
+
+
     <!-- Container for login and registration forms -->
     <div class="form-container">
         <!-- Login Section -->
@@ -31,7 +41,7 @@
         <div class="form-section" id="registration-section">
             <h2>Register</h2>
             <form id="registration-form" action="register_process.php" method="post">
-                <label for="reg-email">Emil</label>
+                <label for="reg-email">Email</label>
                 <input type="email" id="reg-email" name="email" placeholder="Your email address" required>
 
                 <label for="reg-password">Password</label>
