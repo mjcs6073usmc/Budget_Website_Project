@@ -6,105 +6,7 @@
     <title>Dynamic Budgeting Table</title>
     <!-- Link to favicon for the webpage -->
     <link rel="icon" type="image/png" href="Images/favicon_1.png">
-    <style>
-        /* Set up the entire page layout and styling */
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-image: url(Images/80s_retro_wallpaper.jpg); /* Background wallpaper */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: #f0f0f0; /* Fallback background color */
-        }
-
-        /* Styling for the table structure and appearance */
-        table {
-            border-collapse: collapse; /* Remove space between borders */
-            width: 60%; /* Table width */
-            margin-top: 20px; /* Add some space above the table */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
-        }
-
-        /* Define styles for table headers and data cells */
-        th, td {
-            border: 2px solid black; /* Border for table cells */
-            padding: 10px; /* Cell padding */
-            text-align: left; /* Align text to the left */
-        }
-
-        /* Set a dark gray background for the table header */
-        th {
-            background-color: darkgray;
-            color: white; /* White text color */
-        }
-
-        /* Add alternating row colors for the table body */
-        tbody tr:nth-child(even) {
-            background-color: rgb(200, 250, 250); /* Light blue for even rows */
-        }
-        tbody tr:nth-child(odd) {
-            background-color: rgb(49, 190, 198); /* Teal for odd rows */
-        }
-
-        /* Highlight row on hover for better user experience */
-        tbody tr:hover {
-            background-color: lightgray;
-            cursor: pointer; /* Pointer cursor on hover */
-        }
-
-        /* Styling for the input form */
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px; /* Add spacing between elements */
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
-            padding: 15px; /* Padding inside the form */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-        }
-
-        /* Input fields, dropdown, and button styling */
-        form input, form select, form button {
-            padding: 10px; /* Padding inside inputs */
-            border: 1px solid gray; /* Light border */
-            border-radius: 5px; /* Rounded corners */
-            font-size: 1rem; /* Standard font size */
-        }
-
-        /* Styling for the form submit button */
-        form button {
-            background-color: rgb(49, 190, 198); /* Teal button color */
-            color: white; /* White text color */
-            cursor: pointer; /* Pointer cursor */
-        }
-        form button:hover {
-            background-color: darkcyan; /* Darker teal on hover */
-        }
-
-        /* General styles for action buttons (Edit, Delete) */
-        .action-button {
-            padding: 5px 10px; /* Compact button size */
-            margin: 0 5px; /* Spacing between buttons */
-            border: none; /* Remove default border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer cursor */
-        }
-        .delete-btn {
-            background-color: red; /* Red for delete action */
-            color: white; /* White text */
-        }
-        .edit-btn {
-            background-color: orange; /* Orange for edit action */
-            color: white; /* White text */
-        }
-    </style>
+    <link rel="stylesheet" href="Styles/BudgetTable.css">
 </head>
 <body>
     <!-- Input form for adding new rows -->
@@ -113,7 +15,7 @@
         <!-- Input for bill name -->
         <input type="text" id="bill-name" placeholder="Bill Name" required>
         <!-- Input for bill cost -->
-        <input type="text" id="bill-cost" placeholder="Cost" required>
+        <input type="number" step="0.01" id="bill-cost" placeholder="Cost" required>
         <!-- Dropdown for bill due date -->
         <select id="bill-due-date" required>
             <option value="" disabled selected>Select Due Date</option>
