@@ -6,18 +6,22 @@
     <title>Budgeting!</title>
     <link rel="icon" type="image/png" href="Images/favicon_1.png">
     <link rel="stylesheet" href="Styles/IndexStyles.css">
+
 </head>
 <body>
     <!-- Main page heading -->
     <h1>Budget time!</h1>
 
     <!--Google API STUFF (WIP)-->
-
+    
+    <!-- Add CSP meta tag to allow Google API scripts -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com;">
+    <script type="text/javascript" src="/JavaScript/Index.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com">
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
     
+
     <!--Google API STUFF (WIP)-->
 
 
