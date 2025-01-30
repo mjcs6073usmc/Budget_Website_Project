@@ -6,53 +6,64 @@
     <title>Budgeting!</title>
     <link rel="icon" type="image/png" href="Images/favicon_1.png">
     <link rel="stylesheet" href="Styles/IndexStyles.css">
-
 </head>
 <body>
     <!-- Main page heading -->
     <h1>Budget time!</h1>
 
-    <!--Google API STUFF (WIP)-->
+    <!-- Google API Sign-In Section -->
+    <div>
+        <h1>Sign In to Your Account</h1>
 
-    <!-- Add CSP meta tag to allow Google API scripts -->
+        <!-- Google Sign-In button will be rendered here -->
+        <div id="g_signin2"></div>
 
-    <title>Sign In with Google</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <h1>Sign In to Your Account</h1>
-    <!-- Google Sign-In button -->
-    <div id="g_signin2"></div>
-    <script>
-        function handleCredentialResponse(response) {
-            const id_token = response.credential;
-            console.log(id_token);
-            // Send the token to your server for verification
-        }
+        <!-- Google Identity Services Script -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
-                callback: handleCredentialResponse
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("g_signin2"),
-                { theme: "outline", size: "large" }
-            );
-            google.accounts.id.prompt(); // Optional: Display the one-click prompt automatically
-        };
-    </script>
+        <script>
+            // Handle credential response after successful sign-in
+            function handleCredentialResponse(response) {
+                const id_token = response.credential; // Get the ID token from the response
+                console.log(id_token); // Debugging: You can see the token in the console
 
-    
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com;"> -->
-    <!-- <script type="text/javascript" src="/JavaScript/Index.js"></script> -->
-    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
-    <!-- <meta name="google-signin-client_id" content="892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com"> -->
-    <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-    
+                // Send the token to your server for verification (you need to implement the server-side verification)
+                fetch('/verify-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token: id_token }),
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log('User data:', data); // Handle the user data here (e.g., store session)
+                })
+                .catch((error) => {
+                    console.error('Error during token verification:', error);
+                });
+            }
 
-    <!--Google API STUFF (WIP)-->
+            // Initialize Google Sign-In on page load
+            window.onload = function () {
+                google.accounts.id.initialize({
+                    client_id: '892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com', // Your Google Client ID
+                    callback: handleCredentialResponse, // Handle the response with the token
+                });
 
+                // Render the Google Sign-In button with specific options
+                google.accounts.id.renderButton(
+                    document.getElementById('g_signin2'), // Where to render the button
+                    { theme: 'outline', size: 'large' } // Button styling options
+                );
 
-    <!-- Container for login and registration forms -->
+                // Optional: You can prompt the user for sign-in automatically
+                google.accounts.id.prompt(); // This shows a one-click sign-in prompt (optional)
+            };
+        </script>
+    </div>
+
+    <!-- Container for login and registration forms (this part can stay as-is) -->
     <div class="form-container">
         <!-- Login Section -->
         <div class="form-section" id="login-section">
@@ -86,10 +97,9 @@
         </div>
     </div>
 
-    <!-- Fixed example button at the bottom-right corner -->
+    <!-- Example Button at the bottom-right corner -->
     <div class="button-container">
         <button id="Example-Button" onclick="window.location.href='budget-table.html';">Example Table</button>
     </div>
 </body>
 </html>
-
