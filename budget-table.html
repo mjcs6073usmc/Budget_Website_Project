@@ -68,7 +68,7 @@
             if (billName && billCost && billDueDate) {
                 const tableBody = document.getElementById("table-body");
                 const newRow = document.createElement("tr");
-                newRow.innerHTML = `
+                newRow.innerHTML = ` 
                     <td>${billName}</td>
                     <td>$${billCost.toFixed(2)}</td>
                     <td>${billDueDate}</td>
@@ -84,6 +84,17 @@
                 document.getElementById("add-row-form").reset();
             }
         });
+
+        function updateBillData() {
+            const rows = document.querySelectorAll("#table-body tr");
+            totalBills = 0;
+            rows.forEach(row => {
+                const costCell = row.cells[1];
+                const cost = parseFloat(costCell.textContent.replace('$', ''));
+                totalBills += cost;
+            });
+            updatePieChart();
+        }
 
         function updatePieChart() {
             const ctx = document.getElementById('income-pie-chart').getContext('2d');
