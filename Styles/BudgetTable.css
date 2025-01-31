@@ -29,6 +29,7 @@ body {
     color: #333; /* Example text color */
     padding: 20px; /* Example padding */
     border-radius: 8px; /* Rounded corners */
+    text-align:center;
 }
 
 /* Styling for the form */
