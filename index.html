@@ -38,6 +38,9 @@
                 .then((res) => res.json())
                 .then((data) => {
                     console.log('User data:', data); // Handle the user data here (e.g., store session)
+
+                    // Redirect to the example table page
+                    window.location.href = 'budget-table.html';
                 })
                 .catch((error) => {
                     console.error('Error during token verification:', error);
@@ -95,11 +98,6 @@
                 <button type="submit">Register</button>
             </form>
         </div>
-    </div>
-
-    <!-- Example Button at the bottom-right corner -->
-    <div class="button-container">
-        <button id="Example-Button" onclick="window.location.href='budget-table.html';">Example Table</button>
     </div>
 </body>
 </html>
