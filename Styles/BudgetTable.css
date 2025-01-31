@@ -13,6 +13,61 @@ body {
     background-color: #f0f0f0; /* Fallback background color */
 }
 
+/* Flex container for positioning the income box, form, and pie chart */
+#main-container {
+    display: flex;
+    justify-content: space-between; /* Distribute space between the elements */
+    align-items: flex-start; /* Align items at the top */
+    width: 80%; /* You can adjust the width to fit your layout */
+    gap: 20px; /* Add space between elements */
+}
+
+/* Styling for the income box */
+#income-box {
+    width: 25%; /* Control the width of the income container */
+    background-color: #f0f0f0; /* Example background color */
+    color: #333; /* Example text color */
+    padding: 20px; /* Example padding */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Styling for the form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Add spacing between elements */
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    padding: 15px; /* Padding inside the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+/* Input fields, dropdown, and button styling */
+form input, form select, form button {
+    padding: 10px; /* Padding inside inputs */
+    border: 1px solid gray; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Standard font size */
+}
+
+/* Styling for the form submit button */
+form button {
+    background-color: rgb(49, 190, 198); /* Teal button color */
+    color: white; /* White text color */
+    cursor: pointer; /* Pointer cursor */
+}
+form button:hover {
+    background-color: darkcyan; /* Darker teal on hover */
+}
+
+/* Pie chart container styling */
+#pie-chart-container {
+    width: 25%; /* Adjust the pie chart width */
+    text-align: center;
+}
+
 /* Styling for the table structure and appearance */
 table {
     border-collapse: collapse; /* Remove space between borders */
@@ -46,37 +101,6 @@ tbody tr:nth-child(odd) {
 tbody tr:hover {
     background-color: lightgray;
     cursor: pointer; /* Pointer cursor on hover */
-}
-
-/* Styling for the input form */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px; /* Add spacing between elements */
-    margin-top: 20px;
-    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
-    padding: 15px; /* Padding inside the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-}
-
-/* Input fields, dropdown, and button styling */
-form input, form select, form button {
-    padding: 10px; /* Padding inside inputs */
-    border: 1px solid gray; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 1rem; /* Standard font size */
-}
-
-/* Styling for the form submit button */
-form button {
-    background-color: rgb(49, 190, 198); /* Teal button color */
-    color: white; /* White text color */
-    cursor: pointer; /* Pointer cursor */
-}
-form button:hover {
-    background-color: darkcyan; /* Darker teal on hover */
 }
 
 /* General styles for action buttons (Edit, Delete) */
