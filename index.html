@@ -28,7 +28,7 @@
                 console.log(id_token); // Debugging: You can see the token in the console
 
                 // Send the token to your server for verification (you need to implement the server-side verification)
-                fetch('/verify-token', {
+                fetch('https://ad98-50-222-186-92.ngrok-free.app/verify-token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
