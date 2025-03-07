@@ -32,6 +32,16 @@ body {
     text-align:center;
 }
 
+/* Styling for the month box */
+#month-box {
+    width: 25%; /* Control the width of the income container */
+    background-color: #f0f0f0; /* Example background color */
+    color: #333; /* Example text color */
+    padding: 20px; /* Example padding */
+    border-radius: 8px; /* Rounded corners */
+    text-align:center;
+}
+
 /* Styling for the form */
 form {
     display: flex;

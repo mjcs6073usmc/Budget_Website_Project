@@ -22,6 +22,26 @@
             <input type="number" step="0.01" id="income" placeholder="Income" required>
         </div>
 
+        <!-- Add a dropdown to select the month -->
+        <div id="month-box">
+            <h2>Select Month</h2>
+            <select id="month">
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select>
+        </div>
+
+
         <!-- Form for adding a new bill -->
         <form id="add-row-form">
             <h2>Add a New Bill</h2>
@@ -98,6 +118,13 @@
                 tableBody.appendChild(newRow); // Add the new row to the table body
                 totalBills += billCost; // Add the bill cost to the total bills
                 updatePieChart(); // Update the pie chart with new totals
+
+                const bill = { name: billName, cost: billCost, dueDate: billDueDate }; // Get the bill
+                monthlyData[currentMonth].bills.push(bill); // Update
+                monthlyData[currentMonth].totalBills += billCost; 
+
+                updateDataForMonth(); 
+
                 document.getElementById("add-row-form").reset(); // Reset the form fields after submission
             }
         });
@@ -116,6 +143,9 @@
 
         // Function to update the pie chart with the latest income and bills data
         function updatePieChart() {
+            const monthData = monthlyData[currentMonth]; // Get the monthly
+            const income = monthData.income; // Get the income
+            const totalBills = monthData.totalBills;  
             const ctx = document.getElementById('income-pie-chart').getContext('2d'); // Get the canvas context for the pie chart
             if (incomePieChart) {
                 incomePieChart.destroy();  // Destroy the previous chart if it exists
@@ -151,8 +181,77 @@
         // Event listener for the income input field to update total income
         document.getElementById("income").addEventListener("input", function() {
             totalIncome = parseFloat(document.getElementById("income").value) || 0; // Get the income value
+            monthlyData[currentMonth].income = income; // Update the income
             updatePieChart(); // Update the pie chart with the new income value
         });
+
+        // Event listener for the month selection dropdown to update the current month
+        let monthlyData = {
+            "January": { income: 0, totalBills: 0, bills: [] },
+            "February": { income: 0, totalBills: 0, bills: [] },
+            "March": { income: 0, totalBills: 0, bills: [] },
+            "April": { income: 0, totalBills: 0, bills: [] },
+            "May": { income: 0, totalBills: 0, bills: [] },
+            "June": { income: 0, totalBills: 0, bills: [] },
+            "July": { income: 0, totalBills: 0, bills: [] },
+            "August": { income: 0, totalBills: 0, bills: [] },
+            "September": { income: 0, totalBills: 0, bills: [] },
+            "October": { income: 0, totalBills: 0, bills: [] },
+            "November": { income: 0, totalBills: 0, bills: [] },
+            "December": { income: 0, totalBills: 0, bills: [] },
+        };
+
+        // Set the current month based on the selection
+        let currentMonth = "January"; // default to January
+
+        // Event listener for the month selection dropdown to update the current month
+        document.getElementById("month").addEventListener("change", function() {
+            currentMonth = this.value;
+            updateDataForMonth();
+        });
+
+        // Function to update the income and bills for the selected month
+        function updateDataForMonth() {
+            const monthData = monthlyData[currentMonth];
+            document.getElementById("income").value = monthData.income;
+            // Update table and pie chart based on the selected month
+            updateTableAndChart(monthData);
+        }
+
+        // Update pie chart and table based on current month's data
+        function updateTableAndChart(monthData) {
+            // Reset the table
+            const tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            monthData.bills.forEach(bill => {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${bill.name}</td>
+                    <td>$${bill.cost.toFixed(2)}</td>
+                    <td>${bill.dueDate}</td>
+                    <td><button class="action-button delete-btn">Delete</button></td>
+                `;
+                newRow.querySelector(".delete-btn").addEventListener("click", function () {
+                    removeBill(currentMonth, bill);
+                    updateDataForMonth();
+                });
+                tableBody.appendChild(newRow);
+            });
+
+            // Update the pie chart
+            updatePieChart();
+        }
+
+            // Function to remove a bill
+            function removeBill(month, bill) {
+            const index = monthlyData[month].bills.indexOf(bill);
+            if (index > -1) {
+            monthlyData[month].bills.splice(index, 1);
+            monthlyData[month].totalBills -= bill.cost;
+            }
+        }
+
 
         // Initialize the pie chart with default values (income and bills both set to 0)
         let incomePieChart = new Chart(document.getElementById('income-pie-chart').getContext('2d'), {
