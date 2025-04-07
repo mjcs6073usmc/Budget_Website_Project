@@ -12,22 +12,23 @@ function onSignIn(googleUser) {
 
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+    sendIdTokenToBackend(id_token);
 }
 
 function sendIdTokenToBackend(id_token) {
     console.log("SENDING STUFF TO BACKEND");
-    // fetch('https://e99a-50-222-186-92.ngrok-free.app/verify-id-token', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ token: id_token }),
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Backend response:', data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error sending ID token to backend:', error);
-    //     });
+    fetch(`${config.API_URL}/verify-token`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: id_token }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Backend response:', data);
+    })
+    .catch(error => {
+        console.error('Error sending ID token to backend:', error);
+    });
 }

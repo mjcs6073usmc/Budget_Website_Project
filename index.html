@@ -20,6 +20,7 @@
 
         <!-- Google Identity Services Script -->
         <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="JavaScript/config.js"></script>
 
         <script>
             // Handle credential response after successful sign-in
@@ -27,8 +28,8 @@
                 const id_token = response.credential; // Get the ID token from the response
                 console.log(id_token); // Debugging: You can see the token in the console
 
-                // Send the token to your server for verification (you need to implement the server-side verification)
-                fetch('https://cca5-50-222-186-92.ngrok-free.app/verify-token', {
+                // Send the token to your server for verification
+                fetch(`${config.API_URL}/verify-token`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -50,23 +51,23 @@
             // Initialize Google Sign-In on page load
             window.onload = function () {
                 google.accounts.id.initialize({
-                    client_id: '892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com', // Your Google Client ID
-                    callback: handleCredentialResponse, // Handle the response with the token
+                    client_id: '892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com',
+                    callback: handleCredentialResponse,
                 });
 
                 // Render the Google Sign-In button with specific options
                 google.accounts.id.renderButton(
-                    document.getElementById('g_signin2'), // Where to render the button
-                    { theme: 'outline', size: 'large' } // Button styling options
+                    document.getElementById('g_signin2'),
+                    { theme: 'outline', size: 'large' }
                 );
 
                 // Optional: You can prompt the user for sign-in automatically
-                google.accounts.id.prompt(); // This shows a one-click sign-in prompt (optional)
+                google.accounts.id.prompt();
             };
         </script>
     </div>
 
-    <!-- Container for login and registration forms (this part can stay as-is) -->
+    <!-- Container for login and registration forms -->
     <div class="form-container">
         <!-- Login Section -->
         <div class="form-section" id="login-section">
