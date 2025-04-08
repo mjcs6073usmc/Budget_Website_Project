@@ -5,7 +5,7 @@ const app = express();
 const client = new OAuth2Client('457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com'); // Your Google Client ID
 const PORT = 3001;
 
-// MySQL Connection Setup
+// MySQL Connection Setup 
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root', // Your MySQL username
