@@ -1,100 +1,71 @@
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const { OAuth2Client } = require('google-auth-library');
-
 const app = express();
+const client = new OAuth2Client('457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com'); // Your Google Client ID
 const PORT = 3001;
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-
-// MySQL connection
+// MySQL Connection Setup
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',               // MySQL username, usually 'root'
-  password: 'cgs2545',        // Your MySQL password
-  database: 'myappdb' // Replace with your actual database name
+    host: 'localhost',
+    user: 'root', // Your MySQL username
+    password: '', // Your MySQL password
+    database: 'myappdb', // Your database name
 });
 
-// Connect to MySQL
-db.connect(err => {
-  if (err) {
-    console.error('MySQL connection error:', err);
-  } else {
-    console.log('Connected to MySQL!');
-  }
-});
+// Middleware to parse JSON
+app.use(express.json());
 
-// Initialize Google OAuth2 client with your Google Client ID
-const client = new OAuth2Client('457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com');
-
-// Route to save table data
-app.post('/save-table', (req, res) => {
-  const tableData = req.body.rows; // Expecting [{col1: val1, col2: val2, ...}, ...]
-
-  const insertPromises = tableData.map(row => {
-    return new Promise((resolve, reject) => {
-      db.query('INSERT INTO your_table_name SET ?', row, (err, results) => { // Replace 'your_table_name' with your actual table name
-        if (err) reject(err);
-        else resolve(results);
-      });
-    });
-  });
-
-  Promise.all(insertPromises)
-    .then(() => res.status(200).json({ message: 'Rows saved successfully!' }))
-    .catch(error => res.status(500).json({ error: 'Error saving rows', details: error }));
-});
-
-// Handle Google Sign-In token verification
+// Endpoint to verify token and save user data
 app.post('/verify-token', async (req, res) => {
-  const { token } = req.body; // Get token from the frontend request
-
-  try {
-    // Verify the token using Google's library
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com', // Replace with your actual Google client ID
-    });
-
-    // Extract user info from the token (e.g., email, name)
-    const payload = ticket.getPayload();
-    const userId = payload.sub;
-    const userEmail = payload.email;
-    const userName = payload.name;
-
-    // Now, you can save this user info to your database
-    // For example, check if user already exists in the database
-    const query = `SELECT * FROM users WHERE google_id = ?`;
-    db.query(query, [userId], (err, results) => {
-      if (err) {
-        return res.status(500).json({ message: 'Error checking user' });
-      }
-
-      if (results.length > 0) {
-        // User already exists, send back user info
-        return res.status(200).json({ message: 'User found', data: results[0] });
-      } else {
-        // New user, insert into the database
-        const insertQuery = `INSERT INTO users (google_id, email, name) VALUES (?, ?, ?)`;
-        db.query(insertQuery, [userId, userEmail, userName], (err, result) => {
-          if (err) {
-            return res.status(500).json({ message: 'Error inserting user' });
-          }
-          return res.status(200).json({ message: 'User created', data: result });
+    const token = req.body.token;
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com', // Your client ID
         });
-      }
-    });
-  } catch (error) {
-    console.error('Error verifying token:', error);
-    res.status(400).json({ message: 'Invalid token' });
-  }
+        
+        const payload = ticket.getPayload();
+        const userEmail = payload.email;
+        const userName = payload.name;
+
+        // Check if the user already exists in the database
+        db.query('SELECT * FROM users WHERE email = ?', [userEmail], (err, results) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ message: 'Error checking user' });
+                return;
+            }
+
+            if (results.length > 0) {
+                // User exists
+                res.json({ message: 'User found', user: results[0] });
+            } else {
+                // Create a new user
+                const query = 'INSERT INTO users (email, name) VALUES (?, ?)';
+                db.query(query, [userEmail, userName], (err, results) => {
+                    if (err) {
+                        console.error(err);
+                        res.status(500).json({ message: 'Error creating user' });
+                        return;
+                    }
+                    res.json({ message: 'User created', user: { email: userEmail, name: userName } });
+                });
+            }
+        });
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(500).json({ message: 'Error verifying token' });
+    }
 });
 
-// Server setup
+// Save table data (optional, based on your code)
+app.post('/save-table', (req, res) => {
+    // Implement saving table data into MySQL here
+    res.json({ message: 'Data saved' });
+});
+
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
