@@ -13,9 +13,9 @@ app.use(bodyParser.json());
 // MySQL connection
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'your_mysql_user',     // e.g., 'root'
-  password: 'your_mysql_pass', // e.g., 'password'
-  database: 'your_database_name'
+  user: 'root',               // MySQL username, usually 'root'
+  password: 'cgs2545',        // Your MySQL password
+  database: 'your_database_name' // Replace with your actual database name
 });
 
 // Connect to MySQL
@@ -33,7 +33,7 @@ app.post('/save-table', (req, res) => {
 
   const insertPromises = tableData.map(row => {
     return new Promise((resolve, reject) => {
-      db.query('INSERT INTO your_table_name SET ?', row, (err, results) => {
+      db.query('INSERT INTO your_table_name SET ?', row, (err, results) => { // Replace 'your_table_name' with your actual table name
         if (err) reject(err);
         else resolve(results);
       });
