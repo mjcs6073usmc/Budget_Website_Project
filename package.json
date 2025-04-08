@@ -13,13 +13,22 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.21.2",
     "google-auth-library": "^9.15.1",
+    "mysql": "^2.18.1",
     "mysql2": "^3.14.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjcs6073usmc/Budget_Website_Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mjcs6073usmc/Budget_Website_Project/issues"
+  },
+  "homepage": "https://github.com/mjcs6073usmc/Budget_Website_Project#readme",
+  "description": ""
 }
