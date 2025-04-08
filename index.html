@@ -40,8 +40,13 @@
                 .then((data) => {
                     console.log('User data:', data); // Handle the user data here (e.g., store session)
 
-                    // Redirect to the example table page
-                    window.location.href = 'budget-table.html'; // Redirect to the page after successful login
+                    // Check if the response indicates a successful login and then redirect
+                    if (data.message === 'User found' || data.message === 'User created') {
+                        // Redirect to the budget-table.html page after successful login
+                        window.location.href = 'budget-table.html'; 
+                    } else {
+                        console.error('User not found or error in user creation:', data);
+                    }
                 })
                 .catch((error) => {
                     console.error('Error during token verification:', error);
