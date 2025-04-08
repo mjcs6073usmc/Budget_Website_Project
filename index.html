@@ -67,38 +67,29 @@
         </script>
     </div>
 
-    <!-- Container for login and registration forms (commented out) -->
-    <!--
-    <div class="form-container">
-        <div class="form-section" id="login-section">
-            <h2>Login</h2>
-            <form id="login-form" action="login_process.php" method="post">
-                <label for="login-email">Email</label>
-                <input type="email" id="login-email" name="email" placeholder="Your email address" required>
+    <!-- Save Data Button (you can place this wherever needed in your HTML) -->
+    <button id="saveButton">Save Data</button>
 
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" name="password" placeholder="Max 10 characters" maxlength="10" required>
+    <!-- JavaScript to make the POST request -->
+    <script>
+        document.getElementById('saveButton').addEventListener('click', () => {
+            fetch('http://localhost:3001/save-table', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    rows: [
+                        { column1_name: 'value1', column2_name: 123 },
+                        { column1_name: 'value2', column2_name: 456 }
+                    ]
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log('Data saved:', data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 
-                <button type="submit">Login</button>
-            </form>
-        </div>
-
-        <div class="form-section" id="registration-section">
-            <h2>Register</h2>
-            <form id="registration-form" action="register_process.php" method="post">
-                <label for="reg-email">Email</label>
-                <input type="email" id="reg-email" name="email" placeholder="Your email address" required>
-
-                <label for="reg-password">Password</label>
-                <input type="password" id="reg-password" name="password" placeholder="Max 10 characters" maxlength="10" required>
-
-                <label for="reg-confirm-password">Confirm Password</label>
-                <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Re-enter your password" maxlength="10" required>
-
-                <button type="submit">Register</button>
-            </form>
-        </div>
-    </div>
-    -->
 </body>
 </html>
