@@ -29,19 +29,19 @@
                 console.log(id_token); // Debugging: You can see the token in the console
 
                 // Send the token to your server for verification
-                fetch(`${config.API_URL}/verify-token`, {
+                fetch('http://localhost:3001/verify-token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ token: id_token }),
+                    body: JSON.stringify({ token: id_token }), // Send the token to the backend
                 })
                 .then((res) => res.json())
                 .then((data) => {
                     console.log('User data:', data); // Handle the user data here (e.g., store session)
 
                     // Redirect to the example table page
-                    window.location.href = 'budget-table.html';
+                    window.location.href = 'budget-table.html'; // Redirect to the page after successful login
                 })
                 .catch((error) => {
                     console.error('Error during token verification:', error);
@@ -51,7 +51,7 @@
             // Initialize Google Sign-In on page load
             window.onload = function () {
                 google.accounts.id.initialize({
-                    client_id: '892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com',
+                    client_id: '892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com',  // Replace with your actual client ID
                     callback: handleCredentialResponse,
                 });
 
