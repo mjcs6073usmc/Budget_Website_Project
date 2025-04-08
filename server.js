@@ -29,7 +29,7 @@ db.connect(err => {
 });
 
 // Initialize Google OAuth2 client with your Google Client ID
-const client = new OAuth2Client('892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com');
+const client = new OAuth2Client('457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com');
 
 // Route to save table data
 app.post('/save-table', (req, res) => {
@@ -57,7 +57,7 @@ app.post('/verify-token', async (req, res) => {
     // Verify the token using Google's library
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: '892068601820-49qtpohs2slgr4079rde8r0b32uoiii9.apps.googleusercontent.com', // Replace with your actual Google client ID
+      audience: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com', // Replace with your actual Google client ID
     });
 
     // Extract user info from the token (e.g., email, name)
