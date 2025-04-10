@@ -25,9 +25,11 @@ To use the budgeting website:
     2. Microsoft Copilot
  
 -   Prompts used:
--   1. Prompt 1
-    2. Prompt 2
+-   1. Prompts that aided with creating the framework HTML, stylizing CSS, and JSON files for the landing page and homepage.
+    2. Prompts which helped in the construction and refinement of the pie chart function in our homepage.
+    3. Prompts that helped manage the Google Identity API in Server.js
  
 -   Functions, Components, Pages, etc. that were affected
--   1. Page 1
-    2. Page 2
+-   1. budget-table.hmtl lines 67-214, provided the functions to create and update the pie chart with user information. 
+    2. Server.js, helped with the functions related to Google Identity Authentacation.
+    3. index.html
