@@ -14,68 +14,72 @@
     <!-- Google API Sign-In Section -->
     <div>
         <h1>Sign In to Your Account</h1>
-        <h2>test</h2>
-        <!-- Google Sign-In button will be rendered here -->
         <div id="g_signin2"></div>
 
-        <!-- Google Identity Services Script -->
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-        <!-- Custom JavaScript for Google Sign-In -->
-        <script>
-            // Handle credential response after successful sign-in
-            function handleCredentialResponse(response) {
-                const id_token = response.credential; // Get the ID token from the response
-                console.log(id_token); // Debugging: You can see the token in the console
-
-                // Send the token to your server for verification
-                fetch('http://localhost:3001/verify-token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ token: id_token }), // Send the token to the backend
-                })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log('User data:', data); // Handle the user data here (e.g., store session)
-
-                    // Check if the response indicates a successful login and then redirect
-                    if (data.message === 'User found' || data.message === 'User created') {
-                        // Redirect to the budget-table.html page after successful login
-                        window.location.href = 'budget-table.html'; 
-                    } else {
-                        console.error('User not found or error in user creation:', data);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error during token verification:', error);
-                });
-            }
-
-            // Initialize Google Sign-In on page load
-            window.onload = function () {
-                google.accounts.id.initialize({
-                    client_id: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com',  // Replace with your actual client ID
-                    callback: handleCredentialResponse,
-                });
-
-                // Render the Google Sign-In button with specific options
-                google.accounts.id.renderButton(
-                    document.getElementById('g_signin2'),
-                    { theme: 'outline', size: 'large' }
-                );
-
-                // Optional: You can prompt the user for sign-in automatically
-                google.accounts.id.prompt();
-            };
-        </script>
+        <!-- Button that stays disabled until sign-in -->
+        <button id="redirectButton" disabled style="opacity: 0.5; cursor: not-allowed; margin-top: 20px;">
+            Continue to Budget Table
+        </button>
     </div>
 
-    <!-- Save Data Button (you can place this wherever needed in your HTML) -->
+    <!-- Google Identity Services Script -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Custom JavaScript for Google Sign-In -->
+    <script>
+        function handleCredentialResponse(response) {
+            const id_token = response.credential;
+            console.log(id_token);
+
+            fetch('http://localhost:3001/verify-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: id_token }),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log('User data:', data);
+
+                if (data.message === 'User found' || data.message === 'User created') {
+                    // Enable the redirect button
+                    const btn = document.getElementById('redirectButton');
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+
+                    // Add event listener for redirection
+                    btn.addEventListener('click', () => {
+                        window.location.href = 'budget-table.html';
+                    });
+                } else {
+                    console.error('User not found or error in user creation:', data);
+                }
+            })
+            .catch((error) => {
+                console.error('Error during token verification:', error);
+            });
+        }
+
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com',
+                callback: handleCredentialResponse,
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById('g_signin2'),
+                { theme: 'outline', size: 'large' }
+            );
+
+            google.accounts.id.prompt();
+        };
+    </script>
+
+    <!-- Save Data Button (left unchanged for your backend work) -->
     <button id="saveButton">Save Data</button>
 
-    <!-- JavaScript to make the POST request -->
     <script>
         document.getElementById('saveButton').addEventListener('click', () => {
             fetch('http://localhost:3001/save-table', {
