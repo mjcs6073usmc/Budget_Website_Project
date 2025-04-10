@@ -6,7 +6,7 @@
     <title>Dynamic Budgeting Table</title>
     <link rel="icon" type="image/png" href="Images/favicon_1.png">
     <link rel="stylesheet" href="Styles/BudgetTable.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -56,10 +56,6 @@
             <canvas id="income-pie-chart"></canvas>
         </div>
 
-        <!-- Container for Pie Chart Per Month -->
-        <div id="bar-chart-container">
-            <canvas id="monthly-bar-chart"></canvas>
-        </div>
     </div>
 
     <!-- Table Displaying added Bills -->
@@ -74,6 +70,14 @@
         </thead>
         <tbody id="table-body"></tbody>
     </table>
+
+    <!-- Fixed height container for the bar chart -->
+    <div class="chart-fixed-container">
+        <!-- Container for Bar Chart -->
+        <div id="bar-chart-container">
+            <canvas id="monthly-bar-chart"></canvas>
+        </div>
+    </div>
 
     <!-- Adds Dates in the Due Date dropdown -->
     <script>
@@ -107,7 +111,7 @@
 
         //Sets Selected Month  
         let currentMonth = monthSelect.value;
-        let incomePieChart, monlyBarChart;
+        let incomePieChart, monthlyBarChart;
 
         //Adds an Event Listener to Form for Adding New Bill
         document.getElementById("add-row-form").addEventListener("submit", function (event) {
@@ -162,6 +166,7 @@
                 tableBody.appendChild(row);//Updates Table
             });
             updatePieChart(data); //Updates Pie Chart
+            updateBarChart(); //Updates Bar Chart
         }
 
         //Updates Pie Chart with Income and Bills Data
@@ -223,12 +228,50 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top' }
+                        legend: { 
+                            position: 'top',
+                            labels: {
+                                color: 'white',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                        }
                     },
                     scales: {
-                        x: { title: { display: true, text: 'Months' } },
-                        y: { title: { display: true, text: 'Amount ($)' } }
+                        x: { 
+                            title: { 
+                                display: true, 
+                                text: 'Months',
+                                color: 'white'
+                            },
+                            ticks: {
+                                color: 'white'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)'
+                            }
+                        },
+                        y: { 
+                            title: { 
+                                display: true, 
+                                text: 'Amount ($)',
+                                color: 'white'
+                            },
+                            ticks: {
+                                color: 'white'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
                     }
                 }
             });
