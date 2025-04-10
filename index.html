@@ -14,72 +14,83 @@
     <!-- Google API Sign-In Section -->
     <div>
         <h1>Sign In to Your Account</h1>
+        <!-- Google Sign-In button will be rendered here -->
         <div id="g_signin2"></div>
 
-        <!-- Button that stays disabled until sign-in -->
+        <!-- Button to redirect to budget-table.html -->
         <button id="redirectButton" disabled style="opacity: 0.5; cursor: not-allowed; margin-top: 20px;">
             Continue to Budget Table
         </button>
+
+        <!-- Google Identity Services Script -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+        <!-- Custom JavaScript for Google Sign-In -->
+        <script>
+            function handleCredentialResponse(response) {
+                const id_token = response.credential;
+                if (!id_token) {
+                    console.error('No ID token received from Google');
+                    return;
+                }
+
+                console.log('Google ID Token:', id_token);
+
+                fetch('http://localhost:3001/verify-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token: id_token }),
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log('Server response:', data);
+
+                    if (data.message === 'User found' || data.message === 'User created') {
+                        const btn = document.getElementById('redirectButton');
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                        btn.style.cursor = 'pointer';
+                        btn.addEventListener('click', () => {
+                            window.location.href = 'budget-table.html';
+                        });
+                    } else {
+                        console.error('Unexpected response:', data);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Token verification failed:', error);
+                });
+            }
+
+            // Initialize Google Sign-In on page load
+            window.onload = function () {
+                google.accounts.id.initialize({
+                    client_id: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com',
+                    callback: handleCredentialResponse,
+                    auto_select: false,
+                });
+
+                google.accounts.id.renderButton(
+                    document.getElementById('g_signin2'),
+                    { theme: 'outline', size: 'large' }
+                );
+
+                // Optional: show any issues if sign-in prompt is skipped
+                google.accounts.id.prompt((notification) => {
+                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                        console.warn('Google Sign-In prompt was skipped or not displayed:', notification);
+                    }
+                });
+            };
+        </script>
     </div>
 
-    <!-- Google Identity Services Script -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <!-- Custom JavaScript for Google Sign-In -->
-    <script>
-        function handleCredentialResponse(response) {
-            const id_token = response.credential;
-            console.log(id_token);
-
-            fetch('http://localhost:3001/verify-token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ token: id_token }),
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log('User data:', data);
-
-                if (data.message === 'User found' || data.message === 'User created') {
-                    // Enable the redirect button
-                    const btn = document.getElementById('redirectButton');
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                    btn.style.cursor = 'pointer';
-
-                    // Add event listener for redirection
-                    btn.addEventListener('click', () => {
-                        window.location.href = 'budget-table.html';
-                    });
-                } else {
-                    console.error('User not found or error in user creation:', data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error during token verification:', error);
-            });
-        }
-
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com',
-                callback: handleCredentialResponse,
-            });
-
-            google.accounts.id.renderButton(
-                document.getElementById('g_signin2'),
-                { theme: 'outline', size: 'large' }
-            );
-
-            google.accounts.id.prompt();
-        };
-    </script>
-
-    <!-- Save Data Button (left unchanged for your backend work) -->
+    <!-- Save Data Button -->
     <button id="saveButton">Save Data</button>
 
+    <!-- JavaScript to make the POST request -->
     <script>
         document.getElementById('saveButton').addEventListener('click', () => {
             fetch('http://localhost:3001/save-table', {
