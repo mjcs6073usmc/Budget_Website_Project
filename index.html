@@ -18,7 +18,7 @@
         <div id="g_signin2"></div>
 
         <!-- Button to redirect to budget-table.html -->
-        <button id="redirectButton" disabled style="opacity: 0.5; cursor: not-allowed; margin-top: 20px;">
+        <button id="redirectButton" style="margin-top: 20px;">
             Continue to Budget Table
         </button>
 
@@ -29,13 +29,9 @@
         <script>
             function handleCredentialResponse(response) {
                 const id_token = response.credential;
-                if (!id_token) {
-                    console.error('No ID token received from Google');
-                    return;
-                }
-
                 console.log('Google ID Token:', id_token);
 
+                // Optional: You can still verify the token if desired
                 fetch('http://localhost:3001/verify-token', {
                     method: 'POST',
                     headers: {
@@ -46,18 +42,6 @@
                 .then((res) => res.json())
                 .then((data) => {
                     console.log('Server response:', data);
-
-                    if (data.message === 'User found' || data.message === 'User created') {
-                        const btn = document.getElementById('redirectButton');
-                        btn.disabled = false;
-                        btn.style.opacity = '1';
-                        btn.style.cursor = 'pointer';
-                        btn.addEventListener('click', () => {
-                            window.location.href = 'budget-table.html';
-                        });
-                    } else {
-                        console.error('Unexpected response:', data);
-                    }
                 })
                 .catch((error) => {
                     console.error('Token verification failed:', error);
@@ -76,14 +60,12 @@
                     document.getElementById('g_signin2'),
                     { theme: 'outline', size: 'large' }
                 );
-
-                // Optional: show any issues if sign-in prompt is skipped
-                google.accounts.id.prompt((notification) => {
-                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                        console.warn('Google Sign-In prompt was skipped or not displayed:', notification);
-                    }
-                });
             };
+
+            // Redirect button always active
+            document.getElementById('redirectButton').addEventListener('click', () => {
+                window.location.href = 'budget-table.html';
+            });
         </script>
     </div>
 
