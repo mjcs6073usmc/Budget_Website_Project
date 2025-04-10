@@ -11,7 +11,8 @@
 <body>
 
     <!-- Main page heading  -->
-    <h1>Make Budgeting Easy!</h1>
+    <h1>Welcome, <span id="userName"></span>!</h1>
+    <h2>Make Budgeting Easy!</h2>
 
     <!--  Main container -->
     <div id="main-container">
@@ -87,8 +88,8 @@
             const userData = JSON.parse(localStorage.getItem('userData'));
             if (userData) {
                 console.log('Logged in as:', userData.name);
-                // You can use this data to personalize the page
-                // For example, display the user's name or profile picture
+                // Display the user's name
+                document.getElementById('userName').textContent = userData.name;
             } else {
                 // If no user data is found, redirect back to login
                 window.location.href = 'index.html';
