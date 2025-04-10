@@ -1,45 +1,99 @@
-<!-- Inside your existing <script> tag -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgeting!</title>
+    <link rel="icon" type="image/png" href="Images/favicon_1.png">
+    <link rel="stylesheet" href="Styles/IndexStyles.css">
+</head>
+<body>
+    <!-- Main page heading  -->
+    <h1>Budget time!</h1>
+
+    <!-- Google API Sign-In Section -->
+    <div>
+        <h1>Sign In to Your Account</h1>
+        <h2>test</h2>
+        <!-- Google Sign-In button will be rendered here -->
+        <div id="g_signin2"></div>
+
+        <!-- Google Identity Services Script -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+        <!-- Custom JavaScript for Google Sign-In -->
+        <script>
+            // Handle credential response after successful sign-in
+            function handleCredentialResponse(response) {
+                const id_token = response.credential; // Get the ID token from the response
+                console.log(id_token); // Debugging: You can see the token in the console
+
+                // Send the token to your server for verification
+                fetch('http://localhost:3001/verify-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token: id_token }), // Send the token to the backend
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log('User data:', data); // Handle the user data here (e.g., store session)
+
+                    // Check if the response indicates a successful login and then redirect
+                    if (data.message === 'User found' || data.message === 'User created') {
+                        // Redirect to the budget-table.html page after successful login
+                        window.location.href = 'budget-table.html'; 
+                    } else {
+                        console.error('User not found or error in user creation:', data);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error during token verification:', error);
+                });
+            }
+
+            // Initialize Google Sign-In on page load
+            window.onload = function () {
+                google.accounts.id.initialize({
+                    client_id: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com',  // Replace with your actual client ID
+                    callback: handleCredentialResponse,
+                });
+
+                // Render the Google Sign-In button with specific options
+                google.accounts.id.renderButton(
+                    document.getElementById('g_signin2'),
+                    { theme: 'outline', size: 'large' }
+                );
+
+                // Optional: You can prompt the user for sign-in automatically
+                google.accounts.id.prompt();
+            };
+        </script>
+    </div>
+
+    <!-- Save Data Button (you can place this wherever needed in your HTML) -->
+    <button id="saveButton">Save Data</button>
+
+    <!-- JavaScript to make the POST request -->
     <script>
-        function handleCredentialResponse(response) {
-            const id_token = response.credential;
-            console.log(id_token);
-    
-            fetch('http://localhost:3001/verify-token', {
+        document.getElementById('saveButton').addEventListener('click', () => {
+            fetch('http://localhost:3001/save-table', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ token: id_token }),
+                body: JSON.stringify({
+                    rows: [
+                        { column1_name: 'value1', column2_name: 123 },
+                        { column1_name: 'value2', column2_name: 456 }
+                    ]
+                })
             })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log('User data:', data);
-                console.log('Server message:', data.message); // Log the message to debug
-    
-                // Loosened the check: if server says success, redirect
-                if (data.message && (data.message.includes('User found') || data.message.includes('User created'))) {
-                    window.location.href = 'budget-table.html';
-                } else {
-                    console.error('Login failed or unexpected message:', data.message);
-                }
-            })
-            .catch((error) => {
-                console.error('Error during token verification:', error);
-            });
-        }
-    
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: '457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com',
-                callback: handleCredentialResponse,
-            });
-    
-            google.accounts.id.renderButton(
-                document.getElementById('g_signin2'),
-                { theme: 'outline', size: 'large' }
-            );
-    
-            google.accounts.id.prompt();
-        };
+            .then(response => response.json())
+            .then(data => console.log('Data saved:', data))
+            .catch(error => console.error('Error:', error));
+        });
     </script>
-    
+</body>
+</html>
