@@ -9,12 +9,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+    <!-- Main page heading  -->
+    <h1>Make Budgeting Easy!</h1>
+
+    <!--  Main container -->
     <div id="main-container">
+        <!-- Section for Income Input -->
         <div id="income-box">
             <h2>Enter Income</h2>
             <input type="number" step="0.01" id="income" placeholder="Income" required>
         </div>
 
+        <!-- Section for Month Dropdown Selection -->
         <div id="month-box">
             <h2>Select Month</h2>
             <select id="month">
@@ -32,26 +39,30 @@
                 <option value="December">December</option>
             </select>
         </div>
-
+        
+        <!-- Form that adds Bill Content -->
         <form id="add-row-form">
             <h2>Add a New Bill</h2>
-            <input type="text" id="bill-name" placeholder="Bill Name" required>
-            <input type="number" step="0.01" id="bill-cost" placeholder="Cost" required>
-            <select id="bill-due-date" required>
+            <input type="text" id="bill-name" placeholder="Bill Name" required> <!-- Bill Name Input -->
+            <input type="number" step="0.01" id="bill-cost" placeholder="Cost" required><!-- Bill Cost Input -->
+            <select id="bill-due-date" required><!-- Due Date Dropdown -->
                 <option value="" disabled selected>Select Due Date</option>
             </select>
             <button type="submit">Add Row</button>
         </form>
 
+        <!-- Container for Pie Chart -->
         <div id="pie-chart-container">
             <canvas id="income-pie-chart"></canvas>
         </div>
 
+        <!-- Container for Pie Chart Per Month -->
         <div id="bar-chart-container">
             <canvas id="monthly-bar-chart"></canvas>
         </div>
     </div>
 
+    <!-- Table Displaying added Bills -->
     <table>
         <thead>
             <tr>
@@ -64,6 +75,7 @@
         <tbody id="table-body"></tbody>
     </table>
 
+    <!-- Adds Dates in the Due Date dropdown -->
     <script>
         const billDueDateSelect = document.getElementById('bill-due-date');
         for (let i = 1; i <= 31; i++) {
@@ -72,11 +84,12 @@
             option.textContent = i;
             billDueDateSelect.appendChild(option);
         }
-
+        // Gets References to Income, Table Body, and Month input
         const incomeInput = document.getElementById("income");
         const tableBody = document.getElementById("table-body");
         const monthSelect = document.getElementById("month");
 
+        //Defines object to hold Montly data
         let monthlyData = {
             "January": { income: 0, totalBills: 0, bills: [] },
             "February": { income: 0, totalBills: 0, bills: [] },
@@ -92,36 +105,43 @@
             "December": { income: 0, totalBills: 0, bills: [] },
         };
 
+        //Sets Selected Month  
         let currentMonth = monthSelect.value;
         let incomePieChart, monlyBarChart;
 
+        //Adds an Event Listener to Form for Adding New Bill
         document.getElementById("add-row-form").addEventListener("submit", function (event) {
             event.preventDefault();
             const billName = document.getElementById("bill-name").value;
             const billCost = parseFloat(document.getElementById("bill-cost").value);
             const billDueDate = billDueDateSelect.value;
 
+            //Adds Monthly Bill Data if Fields are Filled
             if (billName && billCost && billDueDate) {
                 const bill = { name: billName, cost: billCost, dueDate: billDueDate };
                 monthlyData[currentMonth].bills.push(bill);
                 monthlyData[currentMonth].totalBills += billCost;
 
+                //Updates the table/charts with New Bill
                 updateTableAndChart(monthlyData[currentMonth]);
                 document.getElementById("add-row-form").reset();
             }
         });
 
+        //Adds Event Listener to Update Monthly Income from New Values
         incomeInput.addEventListener("input", function () {
             monthlyData[currentMonth].income = parseFloat(this.value) || 0;
             updatePieChart(monthlyData[currentMonth]);
         });
 
+        //Adds Event Listener to Update Data based on Month
         monthSelect.addEventListener("change", function () {
             currentMonth = this.value;
             updateTableAndChart(monthlyData[currentMonth]);
             incomeInput.value = monthlyData[currentMonth].income;
         });
 
+        //Updates table/charts to Current Month Data
         function updateTableAndChart(data) {
             tableBody.innerHTML = "";
             data.bills.forEach((bill, index) => {
@@ -132,17 +152,19 @@
                     <td>${bill.dueDate}</td>
                     <td><button class="delete-btn" data-index="${index}">Delete</button></td>
                 `;
+                //Event Listener to Remove a Bill
                 row.querySelector(".delete-btn").addEventListener("click", function () {
                     const idx = this.getAttribute("data-index");
                     monthlyData[currentMonth].totalBills -= data.bills[idx].cost;
                     data.bills.splice(idx, 1);
                     updateTableAndChart(data);
                 });
-                tableBody.appendChild(row);
+                tableBody.appendChild(row);//Updates Table
             });
-            updatePieChart(data);
+            updatePieChart(data); //Updates Pie Chart
         }
 
+        //Updates Pie Chart with Income and Bills Data
         function updatePieChart(data) {
             const ctx = document.getElementById('income-pie-chart').getContext('2d');
             if (incomePieChart) incomePieChart.destroy();
@@ -172,7 +194,8 @@
                 }
             });
         }
-
+        
+        //Updates Bar Chart showing Income and Bills data 
         function updateBarChart() {
             const ctx = document.getElementById('monthly-bar-chart').getContext('2d');
             if (monthlyBarChart) monthlyBarChart.destroy();

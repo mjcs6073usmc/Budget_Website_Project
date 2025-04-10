@@ -1,3 +1,12 @@
+/*Styling for the page's title*/
+h1 {
+    text-align: center;            
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Serif font family for a classic look */
+    color: rgb(193, 172, 57); /* Golden text color */
+    font-size: 60px; /* Large font size */
+    margin-top: 20px; /* Space above the heading */
+}
+
 /* Set up the entire page layout and styling */
 body {
     display: flex;
