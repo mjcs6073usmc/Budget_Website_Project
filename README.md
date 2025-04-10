@@ -3,8 +3,10 @@ CIS4004 Group 45
 README file as requested in project instructions: 
 
 - Deployment instructions
--   1. Step ONE
-    2. Step TWO
+-   1. Clone the repository:
+          Git Clone https://mjcs6073usmc.github.io/Budget_Website_Project/
+    2. Navigate to the project directory:
+          Cd Budget_Website_Project
  
 - OUR use of AI:
 - Models used:
