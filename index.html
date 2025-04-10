@@ -31,7 +31,7 @@
                 const id_token = response.credential;
                 console.log('Google ID Token:', id_token);
 
-                // Optional: You can still verify the token if desired
+                // Verify the token and redirect on success
                 fetch('http://localhost:3001/verify-token', {
                     method: 'POST',
                     headers: {
@@ -42,6 +42,8 @@
                 .then((res) => res.json())
                 .then((data) => {
                     console.log('Server response:', data);
+                    // Redirect to budget-table.html after successful authentication
+                    window.location.href = 'budget-table.html';
                 })
                 .catch((error) => {
                     console.error('Token verification failed:', error);
