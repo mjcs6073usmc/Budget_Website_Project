@@ -11,8 +11,10 @@
 <body>
 
     <!-- Main page heading  -->
-    <h1>Welcome, <span id="userName"></span>!</h1>
-    <h2>Make Budgeting Easy!</h2>
+    <div id="welcome-section" style="display: none;">
+        <h1>Welcome, <span id="userName"></span>!</h1>
+        <h2>Make Budgeting Easy!</h2>
+    </div>
 
     <!--  Main container -->
     <div id="main-container">
@@ -82,14 +84,14 @@
 
     <!-- Adds Dates in the Due Date dropdown -->
     <script>
-        // Check for user authentication when the page loads
         document.addEventListener('DOMContentLoaded', function() {
             // Get the stored user data
             const userData = JSON.parse(localStorage.getItem('userData'));
             if (userData) {
                 console.log('Logged in as:', userData.name);
-                // Display the user's name
+                // Display the user's name and show the welcome section
                 document.getElementById('userName').textContent = userData.name;
+                document.getElementById('welcome-section').style.display = 'block';
             } else {
                 // If no user data is found, redirect back to login
                 window.location.href = 'index.html';
