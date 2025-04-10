@@ -42,6 +42,13 @@
                 .then((res) => res.json())
                 .then((data) => {
                     console.log('Server response:', data);
+                    // Save the user data to localStorage
+                    localStorage.setItem('userData', JSON.stringify({
+                        email: data.user.email,
+                        name: data.user.name,
+                        picture: data.user.picture,
+                        token: id_token
+                    }));
                     // Redirect to budget-table.html after successful authentication
                     window.location.href = 'budget-table.html';
                 })
