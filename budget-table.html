@@ -46,6 +46,11 @@
         <div id="pie-chart-container">
             <canvas id="income-pie-chart"></canvas>
         </div>
+
+        Delete if breaks
+        <div id="bar-chart-container">
+            <canvas id="monthly-bar-chart"></canvas>
+        </div>
     </div>
 
     <table>
@@ -164,6 +169,45 @@
                                 }
                             }
                         }
+                    }
+                }
+            });
+        }
+
+        //Delete if breaks
+        function updateBarChart() {
+            const ctx = document.getElementById('monthly-bar-chart').getContext('2d');
+            if (monthlyBarChart) monthlyBarChart.destroy();
+
+            const labels = Object.keys(monthlyData);
+            const incomeData = labels.map(month => monthlyData[month].income);
+            const billsData = labels.map(month => monthlyData[month].totalBills);
+
+            monthlyBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: incomeData,
+                            backgroundColor: '#36A2EB'
+                        },
+                        {
+                            label: 'Bills',
+                            data: billsData,
+                            backgroundColor: '#FF5733'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Months' } },
+                        y: { title: { display: true, text: 'Amount ($)' } }
                     }
                 }
             });
