@@ -83,7 +83,7 @@
     <!-- Adds Dates in the Due Date dropdown -->
     <script>
         // Check for user authentication when the page loads
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             // Get the stored user data
             const userData = JSON.parse(localStorage.getItem('userData'));
             if (userData) {
@@ -93,10 +93,11 @@
             } else {
                 // If no user data is found, redirect back to login
                 window.location.href = 'index.html';
+                return; // Stop execution if not logged in
             }
             
             // Your existing chart and table initialization code here
-        };
+        });
 
         const billDueDateSelect = document.getElementById('bill-due-date');
         for (let i = 1; i <= 31; i++) {
