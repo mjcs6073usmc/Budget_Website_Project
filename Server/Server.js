@@ -33,21 +33,30 @@ app.use(express.json());
 // Route to verify the ID token sent by the frontend
 app.post('/verify-token', cors(corsOptions), async (req, res) => {
     console.log("Token verification request received");
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || 'https://budget-website-project.onrender.com');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
-    const { token } = req.body;
+    console.log("Request body:", req.body);
+    
     try {
+        const { token } = req.body;
+        if (!token) {
+            console.log("No token provided");
+            return res.status(400).json({ error: 'No token provided' });
+        }
+
         const ticket = await client.verifyIdToken({
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID,
         });
 
         const payload = ticket.getPayload();
+        console.log("Token verified successfully");
         res.json({ success: true, user: payload });
     } catch (error) {
         console.error('Token verification failed:', error);
-        res.status(400).json({ success: false, error: 'Invalid token' });
+        res.status(400).json({ 
+            success: false, 
+            error: 'Invalid token',
+            details: error.message 
+        });
     }
 });
 
@@ -59,6 +68,11 @@ app.get('/health', (req, res) => {
 // Serve the index.html file when the root URL is accessed
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+// Add this to your Server.js
+app.get('/test', (req, res) => {
+    res.json({ message: 'Server is working!' });
 });
 
 // Start the server
