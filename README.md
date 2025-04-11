@@ -21,6 +21,7 @@ To use the budgeting website:
 - Models used:
 -   1. OpenAi Chatgpt
     2. Microsoft Copilot
+    3. Cursor
  
 -   Prompts used:
 -   1. Prompts that aided with creating the framework HTML, stylizing CSS, and JSON files for the landing page and homepage.
