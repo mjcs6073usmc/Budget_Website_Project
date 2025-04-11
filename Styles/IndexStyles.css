@@ -118,3 +118,7 @@ body {
         padding: 10px 20px; /* Smaller button padding for mobile */
     }
 }
+#g_signin2 {
+    width: 240px !important; /* Force width to match Google's button */
+    margin: 20px 0;
+}
