@@ -9,14 +9,7 @@ Overview:
 README file as requested in project instructions: 
 
 - Deployment instructions
--   1. Clone the repository:
-          Git Clone https://mjcs6073usmc.github.io/Budget_Website_Project/
-    2. Navigate to the project directory:
-          cd Budget_Website_Project
-    3. Install dependencies:
-          npm install
-    4. Run project locally:
-          npm start
+-  Go to https://mjcs6073usmc.github.io/Budget_Website_Project/
 
 Usage:
 To use the budgeting website:
