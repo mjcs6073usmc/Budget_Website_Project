@@ -6,6 +6,9 @@ Overview:
  information would be entered into a monthly table followed by a dynamic pie chart that better
  visualizes bill management.
 
+Not working:
+- The SQL server is not working at this time so the data is not saved when you leave the page.
+
 README file as requested in project instructions: 
 
 Deployment instructions
