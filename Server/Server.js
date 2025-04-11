@@ -5,6 +5,7 @@ const cors = require('cors');
 const corsOptions = {
     origin: [
         'https://budget-website-project.onrender.com',
+        'https://mjcs6073usmc.github.io',
         'http://localhost:5500',
         'http://localhost:3001'
     ].filter(Boolean),
@@ -33,7 +34,9 @@ app.use(express.json());
 // Route to verify the ID token sent by the frontend
 app.post('/verify-token', cors(corsOptions), async (req, res) => {
     console.log("Token verification request received");
-    console.log("Request body:", req.body);
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || 'https://mjcs6073usmc.github.io');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
     
     try {
         const { token } = req.body;
