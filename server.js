@@ -1,6 +1,17 @@
 const express = require('express');
 const mysql = require('mysql2');
 const { OAuth2Client } = require('google-auth-library');
+const cors = require('cors');
+const corsOptions = {
+    origin: [
+        'https://budget-website-project.onrender.com',
+        'http://localhost:5500',
+        'http://localhost:3001'
+    ].filter(Boolean),
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+};
 const app = express();
 const client = new OAuth2Client('457823584077-c1td3bd3i5c6itoki7kcclc04id31bhp.apps.googleusercontent.com'); // Your Google Client ID
 const PORT = 3001;
