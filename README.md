@@ -10,6 +10,7 @@ README file as requested in project instructions:
 
 Deployment instructions
 -  Go to https://mjcs6073usmc.github.io/Budget_Website_Project/
+-  May take up to a minute for the first login
 
 Usage:
 To use the budgeting website:
