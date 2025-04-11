@@ -33,7 +33,7 @@
                 console.log('Google ID Token:', id_token);
 
                 // Verify the token and redirect on success
-                fetch('http://localhost:3001/verify-token', {
+                fetch('https://budget-website-project.onrender.com/verify-token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -85,7 +85,7 @@
     <!-- JavaScript to make the POST request -->
     <script>
         document.getElementById('saveButton').addEventListener('click', () => {
-            fetch('http://localhost:3001/save-table', {
+            fetch('https://budget-website-project.onrender.com/save-table', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
