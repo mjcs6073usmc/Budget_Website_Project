@@ -8,7 +8,7 @@ Overview:
 
 README file as requested in project instructions: 
 
-- Deployment instructions
+Deployment instructions
 -  Go to https://mjcs6073usmc.github.io/Budget_Website_Project/
 
 Usage:
@@ -16,7 +16,7 @@ To use the budgeting website:
  - https://mjcs6073usmc.github.io/Budget_Website_Project/
 
  
-- OUR use of AI:
+ OUR use of AI:
 - Models used:
 -   1. OpenAi Chatgpt
     2. Microsoft Copilot
