@@ -30,8 +30,10 @@ To use the budgeting website:
 -   1. Prompts that aided with creating the framework HTML, stylizing CSS, and JSON files for the landing page and homepage.
     2. Prompts which helped in the construction and refinement of the pie chart function in our homepage.
     3. Prompts that helped manage the Google Identity API in Server.js
+    4. Prompts were used to find a reasonable hosting service for the backend to run on for free.
  
 -   Functions, Components, Pages, etc. that were affected
 -   1. budget-table.hmtl lines 67-214, provided the functions to create and update the pie chart with user information. 
     2. Server.js, helped with the functions related to Google Identity Authentacation.
     3. index.html
+    4. A large portion of the project used AI all around to help debug and find issues such as incorrect variable names so AI usage occured throughout the project.
